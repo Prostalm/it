@@ -1,0 +1,40 @@
+{
+"builders": [
+{
+"type": "amazon-ebs",
+"region": "{{user `region` }}",
+"source_ami": "{{user `base_ami` }}",
+"instance_type": "{{user `instance_size` }}",
+"ami_name": "my-awesome-ami-for-aws11",
+"ssh_username": "ec2-user",
+"ssh_timeout": "20m",
+"tags": {
+"Project": "Devops",
+"ami_type": "nginx",
+"OS": "ubuntu_2204",
+"BuiltBy": "Packer"
+
+}
+}
+],
+
+ "provisioners": [
+      {
+        "type": "shell",
+        "inline": [
+          "sudo yum update",
+          "sudo yum install -y git nginx awscli",
+          "sudo yum install -y python3-pip",
+          "pip3 install awscli"
+        ]
+      },
+      {
+      "type": "shell",
+      "script": "install_mysql.sh",
+      "execute_command": "sudo {{.Path}}"
+      }
+    ]
+
+
+
+}

@@ -3,7 +3,6 @@
 MYSQL_USER="admin"
 MYSQL_PASSWORD="Pa55WD"
 MYSQL_DB="flask_db"
-MYSQL_HOST="127.0.0.1"
 
 # Обновляем список доступных пакетов
 sudo yum update -y
@@ -14,7 +13,9 @@ sudo yum install -y mariadb105-server
 # Запуск MariaDB и включение автозапуска при загрузке
 sudo systemctl start mariadb
 sudo systemctl enable mariadb
-sudo yum install mariadb-devel.x86_64
+sudo bash -c 'echo "[mysqld]" >> /etc/my.cnf'
+sudo bash -c 'echo "bind-address = 0.0.0.0" >> /etc/my.cnf'
+sudo systemctl restart mysql
 
 
 

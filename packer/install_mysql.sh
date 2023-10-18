@@ -18,6 +18,7 @@ sudo bash -c 'echo "bind-address = 0.0.0.0" >> /etc/my.cnf'
 sudo systemctl restart mysql
 
 
+
 # Создаем пользователя и базу данных MySQL
 sudo mysql -e "CREATE USER IF NOT EXISTS '$MYSQL_USER'@'%' IDENTIFIED BY '$MYSQL_PASSWORD';
 USE mysql;

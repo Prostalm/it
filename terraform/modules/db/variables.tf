@@ -3,7 +3,7 @@ default = "lab-key"
 }
 
 variable "provision_key_path" {
-default = "~/.ssh/web-key.pem"
+default = "~/.ssh/lab-key.pem"
 }
 
 variable "instance_count" {
@@ -11,7 +11,19 @@ variable "instance_count" {
   type        = number
   default     = 1
 }
-variable "security_group_app_id" {
-  description = "DB server internal IP address"
+
+variable "db_ami_id" {
+  description = "AMI_id, example: ami-0a9a25e6f89bbf530"
+  validation {
+    condition = length(var.db_ami_id) > 4 && substr(var.db_ami_id,0,4) == "ami-"
+    error_message = "The db_ami_id value must be a valid AMI id" 
+  }  
 }
 
+variable "sg_id" {
+  description = "Security Group ID"
+}
+variable "instance_type" {
+  description = "Instance type"
+  default     = "t2.micro"
+}

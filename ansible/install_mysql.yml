@@ -2,13 +2,18 @@
       mysql_user:
         name: "{{ MYSQL_USER }}"
         password: "{{ MYSQL_PASSWORD }}"
-        host: '%'
+        host: all
         state: present
+        login_unix_socket: /var/run/mysqld/mysqld.sock
+        login_user: root
       register: mysql_user_result
+
 
     - name: Create MySQL database
       mysql_db:
-        name: "{{ MYSQL_DB }}"
+        name: "{{ MYSQL_DB }}"        
+        login_user: root
+        login_unix_socket: /var/run/mysqld/mysqld.sock 
         state: present
       register: mysql_db_result
 
@@ -17,7 +22,7 @@
         name: "{{ MYSQL_USER }}"
         password: "{{ MYSQL_PASSWORD }}"
         priv: "{{ MYSQL_DB }}.*:ALL"
-        host: '%'
+        host: all
         state: present
 
     - name: Show available databases
@@ -38,12 +43,12 @@
         state: latest
         clean_requirements_list: yes
 
-    - name: Set MySQL root password
-      mysql_user:
-        name: root
-        password: "{{ MYSQL_ROOT_PASSWORD }}"
-        host: localhost
-        state: present
+    - name: set mysql to listen on external ip
+      replace:
+        path: /etc/mysql/my.cnf
+        regexp: 127.0.0.1
+        replace: 0.0.0.0
+
 
     - name: Ensure MySQL is running and enabled
       service:

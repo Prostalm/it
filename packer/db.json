@@ -5,7 +5,7 @@
 "region": "{{user `region` }}",
 "source_ami": "{{user `base_ami` }}",
 "instance_type": "{{user `instance_size` }}",
-"ami_name": "my-db1",
+"ami_name": "my-db2",
 "ssh_username": "ec2-user",
 "ssh_timeout": "20m",
 "tags": {
@@ -21,7 +21,8 @@
 "provisioners": [
       {
         "type": "ansible",
-        "playbook_file": "/home/vladlen/vladlen-bondarchuk/ansible/db_install.yml"
+        "playbook_file": "/home/vladlen/vladlen-bondarchuk/ansible/db_install.yml",
+        "extra_arguments": [ "--extra-vars", "MYSQL_USER={{user `DB_USER`}} MYSQL_PASSWORD={{user `DB_PASSWORD`}} MYSQL_DB={{user `DB_NAME`}}" ]
       }
     ] 
 

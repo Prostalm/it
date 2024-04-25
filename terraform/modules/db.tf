@@ -6,7 +6,6 @@ vpc_security_group_ids = [aws_security_group.db.id]
 tags = {
 Name = "DB server"
 project = "Devops"
-
 }
 
 

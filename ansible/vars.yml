@@ -1,4 +1,4 @@
-# vars.yml
+
 MYSQL_USER: admin
 MYSQL_PASSWORD: Pa55WD
 MYSQL_DB: flask_db
@@ -12,3 +12,6 @@ NUM_BACKUPS: 7
 AWS_ACCESS_KEY_ID: your_access_key_id
 AWS_SECRET_ACCESS_KEY: your_secret_access_key
 MYSQL_ROOT_PASSWORD: root_password
+mysql_root_unix_socket: /var/run/mysqld/mysqld.sock
+login_user: root
+login_unix_socket: /var/run/mysqld/mysqld.sock

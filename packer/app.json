@@ -5,7 +5,7 @@
 "region": "{{user `region` }}",
 "source_ami": "{{user `base_ami` }}",
 "instance_type": "{{user `instance_size` }}",
-"ami_name": "my-app",
+"ami_name": "my-app3",
 "ssh_username": "ec2-user",
 "ssh_timeout": "20m",
 "tags": {
@@ -21,7 +21,9 @@
 "provisioners": [
       {
         "type": "ansible",
-        "playbook_file": "/home/vladlen/vladlen-bondarchuk/ansible/app_install.yml"
+        "playbook_file": "/home/vladlen/vladlen-bondarchuk/ansible/app_install.yml",
+        "extra_arguments": [ "-vvv" ]
+      
       }
     ] 
 

@@ -2,11 +2,13 @@ resource "aws_instance" "app" {
 ami = "ami-01df11c049ae5c039"
 instance_type = "t2.micro"
 key_name = "lab-key"
+vpc_security_group_ids = [aws_security_group.app.id]
 tags = {
 Name = "App server"
 project = "Devops"
 
 }
+
 depends_on = [aws_instance.db]
 
 

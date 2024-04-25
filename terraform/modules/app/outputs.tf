@@ -1,4 +1,5 @@
-output "security_group_app_id" {
-  value = aws_security_group.app.id
+output "app_instances_public_ip" {
+  value = "${aws_instance.app.*.public_ip}"
+
 }
 

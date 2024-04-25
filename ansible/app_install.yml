@@ -11,10 +11,11 @@
 
   tasks:
     - name: Install packages
-      package:
+      dnf:
         name: "{{ item }}"
         state: present
         update_cache: yes
       tags:
         - from_list
       loop: "{{ packages }}"
+

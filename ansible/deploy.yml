@@ -1,5 +1,5 @@
 - name: Configure app directory
- hosts: web
+ hosts: all
  gather_facts: yes
  become: yes
  tasks:

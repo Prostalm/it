@@ -1,0 +1,45 @@
+    
+    - name: set mysql to listen on external IP
+      MYSQL_USER:
+        path: /etc/mysql/my.cnf
+        block: |
+          [mysqld]
+          bind-address = 0.0.0.0 
+        state: present  
+      tags:
+        - install_mysql
+
+    - name: install MySQL-python
+      MYSQL_USER:
+        name:
+          - pymysql
+        state: present
+      tags:
+        - install_mysql
+
+    - name: create database
+      MYSQL_DB:
+        name: "{{ MYSQL_DB }}"
+        state: present
+        login_user: root
+        login_unix_socket: /var/run/mysqld/mysqld.sock
+      tags:
+        - init_mysql
+
+    - name: add mysql user for database
+      MYSQL_USER:
+        login_user: root
+        login_unix_socket: /var/run/mysqld/mysqld.sock      
+        append_privs: yes
+        name: "{{ MYSQL_USER }}"
+        password: "{{ MYSQL_PASSWORD }}"
+        host: '%'
+        priv: "{{ MYSQL_DB }}.*:ALL"
+        state: present
+      tags:
+        - init_mysql
+        
+    - name: restart mysql
+      ansible.systemd:
+        name: mysql
+        state: restarted 

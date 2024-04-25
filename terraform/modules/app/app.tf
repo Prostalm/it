@@ -1,13 +1,9 @@
 resource "aws_instance" "app" {
-ami = "ami-01df11c049ae5c039"
-instance_type = "t2.micro"
-key_name = "lab-key"
-vpc_security_group_ids = [aws_security_group.app.id]
-tags = {
-Name = "App server"
-project = "Devops"
-
-}
+  count                  = var.instance_count
+  ami                    = var.app_ami_id
+  instance_type          = var.instance_type
+  key_name               = var.key_name
+  vpc_security_group_ids = [var.sg_id]
 
 
 connection {
@@ -33,4 +29,7 @@ provisioner "remote-exec" {
 script = "${path.module}/files/deploy.sh"
 
 }
+tags = {
+    Name = "App server prod${count.index + 1}"
+  }
 }
